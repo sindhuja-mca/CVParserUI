@@ -1,0 +1,101 @@
+<!--
+Created by Christy 
+Resume Parser project 
+Parse Resume and display in HTML table format
+-->
+<div class="container">
+  <form>
+  <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4" style="text-align: center;">          
+          <div class="form-group custom-file" style="text-align: center;">
+            <input type="file" class="form-control-file" id="customFile" [uploader]="uploader"
+            ng2FileSelect accept=".docx,.pdf" multiple>
+            <label class="custom-file-label" for="customFile">Choose file</label>
+            <!--<input style="text-align:center;" type="file" class="form-control-file" ng2FileSelect 
+            [uploader]="uploader" accept=".docx,.pdf" multiple  />-->
+            <!--<div ng2FileDrop 
+            [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" 
+            (fileOver)="fileOverBase($event)"
+            [uploader]="uploader"
+            class="area">
+            <div id="dropZone" >Drop files here</div>
+            </div>
+            <div style="padding-top: 10px; text-align: center;"> 
+                <h6>Selected files: {{ uploader?.queue?.length }}</h6>
+                <ul>
+                <li *ngFor="let item of uploader.queue">
+                    {{ item?.file?.name }}
+                </li>
+                </ul>
+            </div>-->
+          </div>          
+          <div style="padding-top:20px;text-align: center;">
+            <button class="btn btn-primary" (click)="convertDocCSV($event)">Doc to CSV</button>
+            <button class="btn btn-primary" (click)="convertPDFCSV($event)">PDF to CSV</button>              
+          </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>  
+  </form>  
+</div><br><br>
+<div class="container" *ngIf="uploadStatus">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4" style="text-align: center;">          
+          <div class="form-group custom-file" style="text-align: center;">
+            <input type="file" class="form-control-file" id="customFile" [uploader]="uploader"
+            ng2FileSelect value="D:\christy\Java\javaproject\cvparse\temp\*.*" multiple>
+            <label class="custom-file-label" for="customFile">Choose file</label>
+          </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div><br>
+  <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4" style="text-align: center;">
+          <button class="btn btn-success">Upload</button>
+          <button class="btn btn-info" (click)="parseResume($event)">Parse</button>
+          <button class="btn btn-danger">Cancel</button>         
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+</div>
+<div class="container" *ngIf="show">
+    <div class="row" >
+        <div class="col-md-8"></div>
+        <div class="col-md-4 input-group">
+            <input type="text" class="form-control" name="search" [(ngModel)]="searchText" placeholder="Search Text" />
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-12 table-responsive-sm">
+            <table class="table table-dark table-striped table-md">
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Qualification</th>
+                  <th>Experience</th>
+                  <th>Primary Skills</th>
+                  <th>Secondary Skills</th>
+                  <th>Posted Date</th>
+                </tr>
+                <tr *ngFor="let data of rowData| filter:searchText">
+                  <td>{{data.name}}</td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.mobile}}</td>
+                  <td>{{data.qualification}}</td>
+                  <td>{{data.experience}}</td>
+                  <td>{{data.primarySkill}}</td>
+                  <td>{{data.secondarySkill}}</td>    
+                  <td>{{data.resumePostedDate}}</td>
+                </tr>
+                </table>          
+        </div>
+        
+    </div>
+</div>
+
+
