@@ -11,6 +11,7 @@ import { ResumeRoutes } from './resumeupload.routing';
 import { CommonModule } from '@angular/common';
 import { ResumeService } from './resume.service';
 import { FilterPipe } from './filter.pipe';
+//import { CandidateNamePipe } from "./CandidateNamePipe";
 import {FileUploadModule} from 'ng2-file-upload';
 
 @NgModule({
@@ -21,8 +22,9 @@ import {FileUploadModule} from 'ng2-file-upload';
               FileUploadModule          
             ],
           
-      declarations: [ ResumeuploadComponent
-        ,FilterPipe
+      declarations: [ ResumeuploadComponent,
+        FilterPipe
+        //,CandidateNamePipe
       ],
       providers: [ResumeService]
   })

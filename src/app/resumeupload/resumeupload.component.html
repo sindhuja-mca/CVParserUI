@@ -4,49 +4,12 @@ Resume Parser project
 Parse Resume and display in HTML table format
 -->
 <div class="container">
-  <form>
-  <div class="row">
-      <div class="col-md-4"></div>
-      <div class="col-md-4" style="text-align: center;">          
-          <div class="form-group custom-file" style="text-align: center;">
-            <input type="file" class="form-control-file" id="customFile" [uploader]="uploader"
-            ng2FileSelect accept=".docx,.pdf" multiple>
-            <label class="custom-file-label" for="customFile">Choose file</label>
-            <!--<input style="text-align:center;" type="file" class="form-control-file" ng2FileSelect 
-            [uploader]="uploader" accept=".docx,.pdf" multiple  />-->
-            <!--<div ng2FileDrop 
-            [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" 
-            (fileOver)="fileOverBase($event)"
-            [uploader]="uploader"
-            class="area">
-            <div id="dropZone" >Drop files here</div>
-            </div>
-            <div style="padding-top: 10px; text-align: center;"> 
-                <h6>Selected files: {{ uploader?.queue?.length }}</h6>
-                <ul>
-                <li *ngFor="let item of uploader.queue">
-                    {{ item?.file?.name }}
-                </li>
-                </ul>
-            </div>-->
-          </div>          
-          <div style="padding-top:20px;text-align: center;">
-            <button class="btn btn-primary" (click)="convertDocCSV($event)">Doc to CSV</button>
-            <button class="btn btn-primary" (click)="convertPDFCSV($event)">PDF to CSV</button>              
-          </div>
-      </div>
-      <div class="col-md-4"></div>
-    </div>  
-  </form>  
-</div><br><br>
-<div class="container" *ngIf="uploadStatus">
     <div class="row">
       <div class="col-md-4"></div>
       <div class="col-md-4" style="text-align: center;">          
-          <div class="form-group custom-file" style="text-align: center;">
-            <input type="file" class="form-control-file" id="customFile" [uploader]="uploader"
-            ng2FileSelect value="D:\christy\Java\javaproject\cvparse\temp\*.*" multiple>
-            <label class="custom-file-label" for="customFile">Choose file</label>
+          <div class="form-group" style="text-align: center;">
+		  <label for="filesDir" >Enter Resume Path</label>
+            <input type="text" #filesDir>
           </div>
       </div>
       <div class="col-md-4"></div>
@@ -54,9 +17,10 @@ Parse Resume and display in HTML table format
   <div class="row">
       <div class="col-md-4"></div>
       <div class="col-md-4" style="text-align: center;">
-          <button class="btn btn-success">Upload</button>
-          <button class="btn btn-info" (click)="parseResume($event)">Parse</button>
-          <button class="btn btn-danger">Cancel</button>         
+		<p ng-if="this.errorMessage">{{this.errorMessage}}</p>
+        <button class="btn btn-info" (click)="parseUploadBtnClick(filesDir.value)">Parse Files</button>         
+          <button class="btn btn-info" (click)="getDetails(filesDir.value)">Get Details</button>         
+          <button class="btn btn-danger">Clear</button>         
       </div>
       <div class="col-md-4"></div>
     </div>
@@ -82,15 +46,25 @@ Parse Resume and display in HTML table format
                   <th>Secondary Skills</th>
                   <th>Posted Date</th>
                 </tr>
+                <!--<tr>
+                    <td><input type="text" class="form-control"  [(ngModel)]="searchName"></td>
+                    <td><input type="text" class="form-control"  [(ngModel)]="searchText.email"></td>
+                    <td><input type="text" class="form-control"  [(ngModel)]="searchText.mobile"></td>
+                    <td><input type="text" class="form-control"  [(ngModel)]="searchText.qualification"></td>
+                    <td><input type="text" class="form-control"  [(ngModel)]="searchText.experience"></td>
+                    <td><input type="text" class="form-control"  [(ngModel)]="searchText.primarySkill"></td>
+                    <td><input type="text" class="form-control"  [(ngModel)]="searchText.secondarySkill"></td>
+                    <td><input type="text" class="form-control"  [(ngModel)]="searchText.uploadedFileName"></td>
+                </tr>-->
                 <tr *ngFor="let data of rowData| filter:searchText">
-                  <td>{{data.name}}</td>
-                  <td>{{data.email}}</td>
-                  <td>{{data.mobile}}</td>
+                  <td>{{data.candidateName }}</td>
+                  <td>{{data.candidateEmail}}</td>
+                  <td>{{data.candidatePhone}}</td>
                   <td>{{data.qualification}}</td>
                   <td>{{data.experience}}</td>
                   <td>{{data.primarySkill}}</td>
                   <td>{{data.secondarySkill}}</td>    
-                  <td>{{data.resumePostedDate}}</td>
+                  <td>{{data.uploadedFileName}}</td>
                 </tr>
                 </table>          
         </div>

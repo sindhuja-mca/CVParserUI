@@ -18,19 +18,40 @@ export class ResumeService{
     constructor(private _http: Http) {
 
 		this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json;  multipart/form-data'); //'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-        this.headers.append('Accept', 'application/json');
-        this.headers.append('Access-Control-Allow-Origin', '*');
+	}
+	
+    public uploadFileService(pathUrl:string) {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('filePath', pathUrl);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.headers = this.headers;
+		requestOptions.search = params;
+		return this._http.get('http://localhost:8080/v1/convertToCSV',requestOptions)
+			.map(this.extractResponseData)
+			.catch(this.handleError);
 	}
 
-    
+	public getCandidateDetails(parsePathUrl:string) {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('filePath', parsePathUrl);
+
+		let requestOptions = new RequestOptions();
+		requestOptions.headers = this.headers;
+		requestOptions.search = params;
+		return this._http.get('http://localhost:8080/v1/getCandidateDetails',requestOptions)
+			.map(this.extractData)
+			.catch(this.handleError);
+	}
+
+	
 
     public parseResume(): Observable<any[]> {
 		
 		let requestOptions = new RequestOptions();
 		requestOptions.headers = this.headers;
 		return this._http
-			.get( 'http://localhost:8082/hsi/cvparse/candidateDetails/displayAllCandidateDetails', requestOptions)
+			.get( 'localhost:8080/v1/displayAllCandidateDetails', requestOptions)
 			.map(this.extractData)
 			.catch(this.handleError);
     }
